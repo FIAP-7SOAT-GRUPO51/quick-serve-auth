@@ -30,7 +30,7 @@ def getAuth():
     except Exception as e:
             return {
                 'statusCode': 400,
-                'body': json.dumps(f'Erro ao criar usuario: {e.response["Error"]["Message"]}')
+                'body': json.dumps(f'Erro ao criar usuario: {e}')
             }    
         
 @app.post('/auth')
@@ -84,11 +84,11 @@ def retornaUsuarioCognito(username):
                                 'email' : emailCognito
                             }
         else:
-            return null
+            return
     except Exception as e:
         return {
             'statusCode': 400,
-            'body': json.dumps(f'Erro ao retornar o usuario: {e.response["Error"]["Message"]}')
+            'body': json.dumps(f'Erro ao retornar o usuario: {e}')
         }
     
     
