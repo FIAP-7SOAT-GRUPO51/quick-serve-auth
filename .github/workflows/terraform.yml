@@ -40,6 +40,10 @@ jobs:
         working-directory: ./src
         run: terraform init 
 
+      - name: Terraform Destroy 
+        working-directory: ./src
+        run: terraform destroy --auto-approve
+        
       - name: Terraform Apply 
         working-directory: ./src
         run: terraform apply --auto-approve
