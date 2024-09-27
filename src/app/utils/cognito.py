@@ -1,6 +1,6 @@
 import boto3
 
-from app.utils import utils
+from utils import utils
 user_pool_id = 'sa-east-1_bMsNkxohu'
 
 def retornaUsuarioCognito(username):
@@ -30,11 +30,9 @@ def retornaUsuarioCognito(username):
 
     
 def geraUsuarioCognito (username,email):
-    try:
-        print('entrou')
+    try:        
         # Inicializa o cliente Cognito
         client = boto3.client('cognito-idp')
-        print('entrou2')
         response = client.admin_create_user(
             UserPoolId = user_pool_id,
             Username = username, 

@@ -80,4 +80,5 @@ resource "aws_lambda_function" "example_lambda" {
   runtime       = "python3.12"
   role          = aws_iam_role.lambda_role.arn
   filename      = "${path.module}/zips/lambda.zip"
+  timeout       =  30
 }

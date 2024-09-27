@@ -1,6 +1,6 @@
 import json
 
-from app.utils import cognito
+from utils import cognito
 
 from botocore.exceptions import ClientError
 from aws_lambda_powertools.event_handler import APIGatewayRestResolver
