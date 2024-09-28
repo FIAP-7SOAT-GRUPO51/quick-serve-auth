@@ -1,6 +1,6 @@
 import json
 
-from app.utils import cognito
+from utils import cognito
 
 from botocore.exceptions import ClientError
 from aws_lambda_powertools.event_handler import APIGatewayRestResolver
@@ -16,20 +16,22 @@ def getAuth():
     username = data['username']
     
     try:
-        sub = cognito.retornaUsuarioCognito(username)
-        print(f'Usuario cognito retorno {username}')
+        sub = cognito.retornaUsuarioCognito(username)        
         if (sub):
-            retorno = { "username": username, "email": emailUsuario, "token": sub}
-            return retorno 
+            usuario_cognito = { "username": username, "email": emailUsuario, "token": sub}
+            return {
+                'statusCode': 200,
+                'body': usuario_cognito
+            }
         else:
             return {
                 'statusCode': 404,
-                'body': ''
+                'body': 'Usuario nao encontrado'
             }
     except Exception as e:
             return {
                 'statusCode': 400,
-                'body': json.dumps(f'Erro ao criar usuario: {e}')
+                'body': json.dumps(f'Erro ao criar usuario. Exception:{e}')
             }    
         
 @app.post('/auth')
@@ -41,28 +43,26 @@ def auth():
     emailUsuario = data['email']
     try:
         sub = cognito.retornaUsuarioCognito(username)
-        if (sub): # se o usuario existe, retorna o usuario existente
-            print('usuario existe. retornando o valor' )
-            retorno = { "username": username, "email": emailUsuario, "token": sub}
-            return retorno 
-        else: # se nao existe, cria um novo usuario com senha aleatoria
-            print('criando um usuario')
-            sub = cognito.geraUsuarioCognito(username, emailUsuario)
-            print('criado')
-            retorno = { "username": username, "email": emailUsuario, "token": sub}
+        if (sub): # se o usuario existe, retorna o usuario existente            
+            usuario_cognito = { "username": username, "email": emailUsuario, "token": sub}
+            return {
+                'statusCode': 200,
+                'body': usuario_cognito
+            }
+        else: # se nao existe, cria um novo usuario com senha aleatoria            
+            sub = cognito.geraUsuarioCognito(username, emailUsuario)            
+            usuario_cognito = { "username": username, "email": emailUsuario, "token": sub}
             return {
                 'statusCode': 201,
-                'body': json.dumps(retorno)
+                'body': usuario_cognito
             }
-    except ClientError as e:
+    except Exception as e:
         return {
             'statusCode': 400,
-            'body': json.dumps(f'Erro ao criar usuario: {e.response["Error"]["Message"]}')
+            'body': json.dumps(f'Erro ao criar usuario. Exception: {e}')
         }
+    
 
 def lambda_handler(event: dict, context: LambdaContext) -> dict:
     print (event)
     return app.resolve(event, context)
-                
-        
-

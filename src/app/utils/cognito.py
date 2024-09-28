@@ -1,6 +1,6 @@
 import boto3
 
-from app.utils import utils
+from utils import utils
 user_pool_id = 'sa-east-1_bMsNkxohu'
 
 def retornaUsuarioCognito(username):
@@ -19,22 +19,20 @@ def retornaUsuarioCognito(username):
             for user in response['Users']:
                 for attribute in user['Attributes']:
                     if(attribute['Name']) == 'sub':
-                        sub = attribute['Value']
-                        print(f'Sub cognito {sub}')
+                        sub = attribute['Value']                        
                         return sub
                         
         else:
             return
-    except Exception as e:
-        raise Exception("Erro ao buscar o usuario")
+    except Exception as e:        
+        raise Exception(f"Erro ao buscar o usuario. Exception {e}")
 
     
 def geraUsuarioCognito (username,email):
-    try:
-        print('entrou')
+    try:        
         # Inicializa o cliente Cognito
         client = boto3.client('cognito-idp')
-        print('entrou2')
+
         response = client.admin_create_user(
             UserPoolId = user_pool_id,
             Username = username, 
@@ -46,13 +44,11 @@ def geraUsuarioCognito (username,email):
             ],
             TemporaryPassword=utils.geraSenhaRandom(),
             MessageAction='SUPPRESS'  
-        )
-        print(response)
+        )        
         user_attributes = response["User"]["Attributes"]
         for attr in user_attributes:
             if attr["Name"] == "sub":
-                user_guid = attr["Value"]
-                print(f"GUID do usuário {username}: {user_guid}")
+                user_guid = attr["Value"]                
         return user_guid
     except Exception as e:
-        raise Exception("Erro ao criar o usuario")
+        raise Exception(f"Erro ao criar o usuario. Exception: {e}")
