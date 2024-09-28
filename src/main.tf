@@ -114,23 +114,13 @@ resource "aws_api_gateway_method" "get" {
   authorization = "NONE"  
 }
 
-
-data "aws_lambda_function" "lambda_auth" {
-  function_name = "authcognito"
-}
-
-output "arn" {
-  value = data.aws_lambda_function.lambda_auth.arn
-}
-
-
 resource "aws_api_gateway_integration" "lambda_integration" {
   rest_api_id = aws_api_gateway_rest_api.my_api.id
   resource_id = aws_api_gateway_resource.root.id
   http_method = aws_api_gateway_method.proxy.http_method
   integration_http_method = "POST"
   type = "AWS_PROXY"
-  uri = data.aws_lambda_function.lambda_auth.invoke_arn
+  uri = aws_lambda_function.example_lambda.invoke_arn
 }
 
 resource "aws_api_gateway_integration" "lambda_integration_get" {
@@ -139,7 +129,7 @@ resource "aws_api_gateway_integration" "lambda_integration_get" {
   http_method = aws_api_gateway_method.get.http_method
   integration_http_method = "POST"
   type = "AWS_PROXY"
-  uri = data.aws_lambda_function.lambda_auth.invoke_arn
+  uri = aws_lambda_function.example_lambda.invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "proxy" {
