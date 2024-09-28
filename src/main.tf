@@ -209,11 +209,19 @@ resource "aws_api_gateway_deployment" "deployment" {
 
 
 resource "aws_iam_role_policy_attachment" "lambda_basic" {
+  depends_on =[
+    aws_iam_role.lambda_role
+  ]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  role = "lambda_execution_role"
+  role = aws_iam_role.lambda_role.name
 }
 
 resource "aws_lambda_permission" "apigw_lambda" {
+
+  depends_on = [
+    aws_iam_role.lambda_role
+  ]
+
   statement_id = "AllowExecutionFromAPIGateway"
   action = "lambda:InvokeFunction"
   function_name = "authcognito"

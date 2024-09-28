@@ -12,8 +12,9 @@ usuarios_repo = UsuariosRepositoryMemoria()
 
 @app.get('/auth')
 def get_auth():
-    username = app.current_event.query_string_parameters["username"]    
-    print(f'Usuario (get): {username}')    
+    username = app.current_event.query_string_parameters["username"]
+    print(f'Usuario (get): {username}')
+    
     try:
         use_case = ConsultarUsuarioUseCase(usuarios_repo)
         user = use_case.execute(username)
