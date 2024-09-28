@@ -35,6 +35,10 @@ jobs:
       - name: Install Python dependencias
         working-directory: ./src/app
         run: pip install aws-lambda-powertools -t . 
+
+      - name: Install Python dependencias
+        working-directory: ./src/app
+        run: pip install isNullOrEmpty -t . 
         
       - name: Terraform init
         working-directory: ./src
