@@ -84,7 +84,7 @@ resource "aws_lambda_function" "example_lambda" {
 }
 
 resource "aws_api_gateway_rest_api" "my_api" {
-  name = "my-api2"
+  name = "api-auth"
   description = "My API Gateway"
 
   endpoint_configuration {
