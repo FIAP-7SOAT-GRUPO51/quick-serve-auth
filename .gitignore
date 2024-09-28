@@ -1,0 +1,12 @@
+src/zips/lambda.zip
+src/.terraform/providers/registry.terraform.io/hashicorp/aws/5.48.0/windows_amd64/terraform-provider-aws_v5.48.0_x5.exe
+src/.terraform/providers/registry.terraform.io/hashicorp/archive/2.6.0/windows_amd64/terraform-provider-archive_v2.6.0_x5.exe
+src/.terraform/providers/registry.terraform.io/hashicorp/archive/2.6.0/windows_amd64/LICENSE.txt
+src/terraform.tfstate.backup
+src/terraform.tfstate
+src/.terraform.lock.hcl
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/vcs.xml
+.idea/quick-serve-auth.iml
+.idea/modules.xml
+.idea/misc.xml
