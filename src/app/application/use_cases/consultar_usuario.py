@@ -12,6 +12,4 @@ class ConsultarUsuarioUseCase:
 
     def execute(self, username: str) -> Usuario:
         usuario = self.repo.obter_usuario_por_username(username)
-        if is_null_or_empty(usuario.username):
-            raise Exception("Usuario não encontrado.")
         return usuario
