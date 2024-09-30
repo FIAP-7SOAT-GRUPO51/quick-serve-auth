@@ -6,7 +6,7 @@ import boto3
 from domain.entities.usuario import Usuario
 from utils import utils
 
-user_pool_id = 'sa-east-1_a0eSpgTEF'
+user_pool_id = 'us-east-1_QqAmbwPgy'
 
 
 class UsuariosRepositoryMemoria(IUsuarioRepository):
